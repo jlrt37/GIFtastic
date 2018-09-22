@@ -1,23 +1,23 @@
 $( document ).ready(function() {
-var actions = ["Hip-Hop", "Rock", "Country", "Classical", "Rap", "Ska", "Reggae", "Heavy Metal","Punk", "Gospel", "R&B", "Techno"];
+var genres = ["Hip-Hop", "Rock", "Country", "Classical", "Rap", "Ska", "Reggae", "Heavy Metal","Punk", "Gospel", "R&B", "Techno"];
 function displayGifButtons(){
     $("#gifButtonsView").empty(); 
-    for (var i = 0; i < actions.length; i++){
+    for (var i = 0; i < genres.length; i++){
         var gifButton = $("<button>");
-        gifButton.addClass("action");
+        gifButton.addClass("genre");
         gifButton.addClass("btn btn-primary")
-        gifButton.attr("data-name", actions[i]);
-        gifButton.text(actions[i]);
+        gifButton.attr("data-name", genres[i]);
+        gifButton.text(genres[i]);
         $("#gifButtonsView").append(gifButton);
     }
 }
 function addNewButton(){
     $("#addGif").on("click", function(){
-    var action = $("#action-input").val().trim();
-    if (action == ""){
+    var genre = $("#genre-input").val().trim();
+    if (genre == ""){
       return false;
     }
-    actions.push(action);
+    genres.push(genre);
 
     displayGifButtons();
     return false;
@@ -25,14 +25,14 @@ function addNewButton(){
 }
 function removeLastButton(){
     $("removeGif").on("click", function(){
-    actions.pop(action);
+    genres.pop(genre);
     displayGifButtons();
     return false;
     });
 }
 function displayGifs(){
-    var action = $(this).attr("data-name");
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + action + "&api_key=jQqPBqcuN6BVPuNTnx4ELmgJnPPXLuY6&limit=10";
+    var genre = $(this).attr("data-name");
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + genre + "&api_key=jQqPBqcuN6BVPuNTnx4ELmgJnPPXLuY6&limit=10";
     console.log(queryURL);
     $.ajax({
         url: queryURL,
@@ -65,7 +65,7 @@ function displayGifs(){
 displayGifButtons();
 addNewButton();
 removeLastButton();
-$(document).on("click", ".action", displayGifs);
+$(document).on("click", ".genre", displayGifs);
 $(document).on("click", ".image", function(){
     var state = $(this).attr('data-state');
     if ( state == 'still'){
